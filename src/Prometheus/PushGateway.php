@@ -80,7 +80,7 @@ class PushGateway
             $renderer = new RenderTextFormat();
             $requestOptions['body'] = $renderer->render($collectorRegistry->getMetricFamilySamples());
         }
-        $response = $client->request($method, $url, $requestOptions);
+        $response = $client->send($client->createRequest(strtoupper($method), $url, $requestOptions));
         $statusCode = $response->getStatusCode();
         if ($statusCode != 202) {
             $msg = "Unexpected status code " . $statusCode . " received from pushgateway " . $this->address . ": " . $response->getBody();
